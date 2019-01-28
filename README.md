@@ -34,7 +34,5 @@ Uses embedded speedometers from TradingView's website for the user to manually
 verify that OsirisCube is reading the same data that is available here.
 
 ## Screenshots
-![49755938_2038988259515162_8824848043003084800_n](https://user-images.githubusercontent.com/38335668/51801655-e987b500-2294-11e9-9779-1e1c3b6c8264.png)
-![image](https://user-images.githubusercontent.com/38335668/51811586-ba5b5d00-2301-11e9-84ed-9b49f8fff277.png)
-
+![image](https://user-images.githubusercontent.com/38335668/51811638-f8588100-2301-11e9-9761-f7fa5226a6b5.png)
 
