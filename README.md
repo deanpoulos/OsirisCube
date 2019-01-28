@@ -3,7 +3,7 @@
 To use the program on a linux operating system, the following dependencies must be installed:
 * `python3` an interpreter/compiler for python code, use package manager (`apt` for ubuntu) to install
 * `pip` a package manager for python library modules, required for API interfacing. Use distro package manager to install (`apt` for ubuntu)
-* `python-binance`, `python-kucoin`, `bitfinex`, `btcmarkets`, `selenium` use `pip install --user <name>`
+* `python-binance`, `selenium` use `pip install --user <name>`
 
 Note: to verify the installation of the modules and find their implementation, use `pip show -f <name>`
 
