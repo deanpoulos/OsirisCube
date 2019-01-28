@@ -11,10 +11,11 @@ Note: to verify the installation of the modules and find their implementation, u
 Interprets TradingView's online javascript technical analysis summary and logs recommendations ver time
 
 ## Agenda 
-- [x] start github
-- [ ] add live price 
+- [x] start github (27/1/19)
+- [x] add live price (28/1/19)
+- [ ] log prices with recommendations
 - [ ] work out trading fees
-- [ ] add live testing logging buy and sell prices
+- [ ] add live testing
 - [ ] add buy and sell order handling
 
 ## Files
