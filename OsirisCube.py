@@ -12,6 +12,7 @@ import datetime;        import time                 # for system clock time
 from formatting         import *                    # abstract away esc seqs
 from selenium           import webdriver  as web    # for 'inspect element'
 import os;              import sys
+from binance.client     import Client     as bin    # from python-binance pip
 
 # tokenise url about variable asset
 url = [ "https://tradingview.com/embed-widget/technical-analysis/" +
@@ -25,7 +26,8 @@ url = [ "https://tradingview.com/embed-widget/technical-analysis/" +
 	
 def getHTML(assets):
     """
-        will get the raw HTML with JavaScript speedometer
+        will get the raw HTML with JavaScript speedometer and return a
+        dictionary of format asset, HTML
     """
 
     # create options object so we can render Firefox invisible
@@ -41,14 +43,12 @@ def getHTML(assets):
         driver.get(url[0] + asset + url[1])
 
         # Give the webpage time to load
-        time.sleep(3)
+        time.sleep(5)
 
         # This will get the html after on-load javascript
         html = driver.execute_script("return document.documentElement.innerHTML;")
 
         htmls[asset] = html
-        f = open("logs/" + asset + ".txt", "w")
-        f.write(html)
 
     os.system("TASKKILL /F /IM firefox.exe > /dev/null")
 
@@ -56,6 +56,10 @@ def getHTML(assets):
 
 
 def determineArrow(assets, htmls):
+    """
+        will search the HTML for keywords and determine the recommendation,
+        returning a dictionary of format asset, recommendation
+    """
 
     arrows = dict()
 
@@ -74,6 +78,25 @@ def determineArrow(assets, htmls):
             arrows[asset] = "Failed"
 
     return arrows
+
+
+def getPrice(assets):
+    """
+        will retrieve the current price of every asset and return a dictionary
+        in the form asset, price, using binance API
+    """
+
+    price = dict()
+
+    # initialise binance client
+    client = bin(keys.APIKey, keys.SecretKey)
+
+    for asset in assets:
+        sym = asset + "USDT"
+        price[asset] = client.get_order_book(symbol=sym)["bids"][0][0]
+    
+
+    return price
 
 # main ========================================================================$
 
@@ -100,12 +123,13 @@ print("\nReading JavaScript...\n")
 # generate table for assets at a time
 print("{:-<11}".format(""), end='')
 for asset in assets:
-    print(BLD + asset + ": " + CLR + "{:-<9}".format(""), end='')
+    print(BLD + asset + ": " + CLR + "{:-<21}".format(""), end='')
 
 # print live updates on asset recommendations
 while True:
     htmls = getHTML(assets)
     arrows = determineArrow(assets, htmls)
+    price = getPrice(assets)
     
     # print the time 
     print("\n" + time.strftime("%H:%M:%S | "), end='')
@@ -113,21 +137,32 @@ while True:
     # print the recommendation for each asset
     for asset in assets:
 
+        # open log file for writing
+        f = open("logs/" + asset, "a")
+
         # colour outputs
         if   "Strong Sell" in arrows[asset]:
             print(RED, end='')
+            f.write(RED)
         elif "Strong Buy" in arrows[asset]:
             print(BLU, end='')
+            f.write(BLU)
         elif "Sell" in arrows[asset]:
             print(ORG, end='')
+            f.write(ORG)
         elif "Buy" in arrows[asset]:
             print(GRN, end='')
+            f.write(GRN)
         elif "Neutral" in arrows[asset]:
             print(YEL, end='')
+            f.write(YEL)
         else:
             print(WHT, end='')
 
-        print("{0:14s}".format(arrows[asset]), end='')
-
+        print("{0:14s}{1}{2:.8s}  | ".format(arrows[asset], CLR,  price[asset]), end='')
         print(CLR, end='')
 
+        f.write(time.strftime("%H:%M:%S: ") +
+                "{0:14s}{1}{2:.8s}\n".format(arrows[asset], CLR, price[asset]))
+        
+        f.close()
