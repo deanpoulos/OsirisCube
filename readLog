@@ -1,3 +1,3 @@
 #!/bin/bash
 
-(echo -e $1 | (cat $1 || echo -e "\x1B[0;91mUsage: ./readLog logs/2018-03-25") 2> /dev/null)
+(echo -e $1 | (cat $1 || echo -e "\x1B[0;91mUsage: ./readLog logs/BTC") 2> /dev/null) | less -R
