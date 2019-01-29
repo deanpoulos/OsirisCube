@@ -15,4 +15,5 @@ BLD = '\033[1m'
 INTRO_MSG   =   ("\n{0}OsirisCube: {1}Prints TradingView recommendation " +
                  "for pairs through HTML fetching{2}\n").format(WHT, YEL, CLR)
 
-CHOICE_MSG  =   ("Enter the name of the desired assets, i.e. ETH:")
+CHOICE_MSG  =   ("Enter the name of the desired assets, i.e. ETH, BTC, LTC \n" +
+                 "and confirm selection using CTRL+D twice:")
