@@ -3,7 +3,7 @@
 To use the program on a linux operating system, the following dependencies must be installed:
 * `python3` an interpreter/compiler for python code, use package manager (`apt` for ubuntu) to install
 * `pip` a package manager for python library modules, required for API interfacing. Use distro package manager to install (`apt` for ubuntu)
-* `python-binance`, `python-kucoin`, `bitfinex`, `btcmarkets`, `selenium` use `pip install --user <name>`
+* `python-binance`, `selenium` use `pip install --user <name>`
 
 Note: to verify the installation of the modules and find their implementation, use `pip show -f <name>`
 
@@ -11,10 +11,11 @@ Note: to verify the installation of the modules and find their implementation, u
 Interprets TradingView's online javascript technical analysis summary and logs recommendations ver time
 
 ## Agenda 
-- [x] start github
-- [ ] add live price 
+- [x] start github (27/1/19)
+- [x] add live price (28/1/19)
+- [ ] log prices with recommendations
 - [ ] work out trading fees
-- [ ] add live testing logging buy and sell prices
+- [ ] add live testing
 - [ ] add buy and sell order handling
 
 ## Files
@@ -33,5 +34,5 @@ Uses embedded speedometers from TradingView's website for the user to manually
 verify that OsirisCube is reading the same data that is available here.
 
 ## Screenshots
-![1](/https://user-images.githubusercontent.com/38335668/51801410-5ac56900-2291-11e9-8b7b-283e700714fd.png)
-
+![image](https://user-images.githubusercontent.com/38335668/51811676-2c33a680-2302-11e9-89be-3a3c8a1cebb7.png)
+![image](https://user-images.githubusercontent.com/38335668/51811638-f8588100-2301-11e9-9761-f7fa5226a6b5.png)
