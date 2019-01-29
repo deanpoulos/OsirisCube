@@ -11619,3 +11619,22 @@ JavaScript error: jar:file:///C:/Program%20Files/Mozilla%20Firefox/omni.ja!/comp
 1548746854664	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid host permission: resource://pdf.js/
 1548746854664	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid host permission: about:reader*
 1548746856044	Marionette	INFO	Listening on port 58203
+1548746856396	Marionette	WARN	TLS certificate errors will be ignored for this session
+1548746877806	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-headless" "-foreground" "-no-remote" "-profile" "C:\\cygwin64\\tmp\\rust_mozprofile.hXnxk4qCphL2"
+*** You are running in headless mode.
+1548746878195	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid host permission: resource://pdf.js/
+1548746878195	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid host permission: about:reader*
+1548746879608	Marionette	INFO	Listening on port 58244
+1548746879917	Marionette	WARN	TLS certificate errors will be ignored for this session
+1548746901413	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-headless" "-foreground" "-no-remote" "-profile" "C:\\cygwin64\\tmp\\rust_mozprofile.QUcArY0w9Ayj"
+*** You are running in headless mode.
+1548746901800	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid host permission: resource://pdf.js/
+1548746901800	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid host permission: about:reader*
+1548746903198	Marionette	INFO	Listening on port 58287
+1548746903524	Marionette	WARN	TLS certificate errors will be ignored for this session
+1548746924806	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-headless" "-foreground" "-no-remote" "-profile" "C:\\cygwin64\\tmp\\rust_mozprofile.olx4CeP63JTK"
+*** You are running in headless mode.
+1548746925189	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid host permission: resource://pdf.js/
+1548746925189	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid host permission: about:reader*
+1548746926563	Marionette	INFO	Listening on port 58325
+1548746926915	Marionette	WARN	TLS certificate errors will be ignored for this session

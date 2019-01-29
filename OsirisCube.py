@@ -13,15 +13,25 @@ from formatting         import *                    # abstract away esc seqs
 from selenium           import webdriver  as web    # for 'inspect element'
 import os;              import sys
 from binance.client     import Client     as bin    # from python-binance pip
+from collections        import defaultdict          # for dict of lists
 
 # tokenise url about variable asset
-url = [ "https://tradingview.com/embed-widget/technical-analysis/" +
-        "?locale=en#%7B%22width%22%3A425%2C%22height%22%3A410%2C%22" + 
-        "symbol%22%3A%22COINBASE%3A",
-
-	"USD%22%2C%22interval%22%3A%221m%22%2C%22" + 
-	"utm_source%22%3A%22%22%2C%22utm_medium%22%3A%22" + 
-	"widget_new%22%2C%22utm_campaign%22%3A%22technical-analysis%22%7D"]
+url = [ "https://s.tradingview.com/embed-widget/technical-analysis/" + 
+        "?locale=en#%7B%22width%22%3A425%2C%22height%22%3A410%2C%22" +
+        "symbol%22%3A%22BINANCE%3A",
+        
+        "BTC%22%2C%22interval%22%3A%221m%22%2C%22" +
+        "utm_source%22%3A%22www.tradingview.com%22%2C%22" +
+        "utm_medium%22%3A%22widget_new%22%2C%22utm_campaign%22%3A%22" +
+        "technical-analysis%22%7D" ]
+        
+# url = [ "https://tradingview.com/embed-widget/technical-analysis/" +
+#         "?locale=en#%7B%22width%22%3A425%2C%22height%22%3A410%2C%22" + 
+#         "symbol%22%3A%22BINANCE%3A",
+# 
+# 	"USD%22%2C%22interval%22%3A%221m%22%2C%22" + 
+# 	"utm_source%22%3A%22%22%2C%22utm_medium%22%3A%22" + 
+# 	"widget_new%22%2C%22utm_campaign%22%3A%22technical-analysis%22%7D"]
 
 	
 def getHTML(assets):
@@ -34,23 +44,30 @@ def getHTML(assets):
     options = web.FirefoxOptions()
     options.add_argument('-headless')
 	
-    # establish headless webdriver using Firefox
-    driver = web.Firefox(firefox_options=options)
-
     htmls = dict()
+
     for asset in assets:
-        # Get the speedometer JS straight from its source
+        # establish headless webdriver using Firefox
+        driver = web.Firefox(firefox_options=options)
+
+        # get the speedometer JS straight from its source
         driver.get(url[0] + asset + url[1])
 
-        # Give the webpage time to load
+        # give the webpage time to load
         time.sleep(5)
 
-        # This will get the html after on-load javascript
+        # this will get the html after on-load javascript
         html = driver.execute_script("return document.documentElement.innerHTML;")
 
+        # store html
         htmls[asset] = html
 
-    os.system("TASKKILL /F /IM firefox.exe > /dev/null")
+        ### write html to a log
+        # f = open("logs/" + asset + ".html", "w")
+        # f.write(html)
+        # f.close()
+
+        driver.close()
 
     return htmls
 
@@ -86,14 +103,17 @@ def getPrice(assets):
         in the form asset, price, using binance API
     """
 
-    price = dict()
+    price = defaultdict(list)
 
     # initialise binance client
     client = bin(keys.APIKey, keys.SecretKey)
 
     for asset in assets:
-        sym = asset + "USDT"
-        price[asset] = client.get_order_book(symbol=sym)["bids"][0][0]
+        sym = asset + "BTC"
+
+        # store price as a list, ask price and bid price
+        price[asset].append(client.get_order_book(symbol=sym)["bids"][0][0])
+        price[asset].append(client.get_order_book(symbol=sym)["asks"][0][0])
     
 
     return price
@@ -123,7 +143,7 @@ print("\nReading JavaScript...\n")
 # generate table for assets at a time
 print("{:-<11}".format(""), end='')
 for asset in assets:
-    print(BLD + asset + ": " + CLR + "{:-<21}".format(""), end='')
+    print(BLD + asset + ": " + CLR + "{:-<23}".format(""), end='')
 
 # print live updates on asset recommendations
 while True:
@@ -139,6 +159,7 @@ while True:
 
         # open log file for writing
         f = open("logs/" + asset, "a")
+        f.write(WHT + time.strftime("%H:%M:%S:  "))
 
         # colour outputs
         if   "Strong Sell" in arrows[asset]:
@@ -159,10 +180,10 @@ while True:
         else:
             print(WHT, end='')
 
-        print("{0:14s}{1}{2:.8s}  | ".format(arrows[asset], CLR,  price[asset]), end='')
-        print(CLR, end='')
+        # print "Strong Buy 0.123456  | "
+        print("{0:14s}{1}{2:.10s}  | ".format(arrows[asset], CLR, price[asset][ASK]), end='')
 
-        f.write(time.strftime("%H:%M:%S: ") +
-                "{0:14s}{1}{2:.8s}\n".format(arrows[asset], CLR, price[asset]))
-        
+        # write to log "06:00:00: Strong Buy  Ask: 0.123456  Bid: 0.123456"
+        f.write("{0:14s}{1} Ask: {2:.10s} Bid: {3:.10s}\n".format(arrows[asset], CLR,
+            price[asset][ASK], price[asset][BID]))
         f.close()
